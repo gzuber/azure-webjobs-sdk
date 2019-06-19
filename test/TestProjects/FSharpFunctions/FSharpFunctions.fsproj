@@ -12,8 +12,4 @@
     <PackageReference Include="TaskBuilder.fs" Version="2.1.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Microsoft.Azure.WebJobs\WebJobs.csproj" />
-  </ItemGroup>
-
 </Project>
