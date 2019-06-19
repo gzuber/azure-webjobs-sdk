@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\Microsoft.Azure.WebJobs.Shared\WebJobs.Shared.projitems" Label="Shared" />
+  <!--<Import Project="..\Microsoft.Azure.WebJobs.Shared\WebJobs.Shared.projitems" Label="Shared" />-->
   <Import Project="..\..\build\common.props" />  
   
   <PropertyGroup>
@@ -21,7 +21,13 @@
     <StyleCopTreatErrorsAsWarnings>false</StyleCopTreatErrorsAsWarnings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
-  </PropertyGroup>
+  </PropertyGroup>  
+  
+  <ItemGroup>
+    <Compile Remove="WebJobs.Host\**" />
+    <EmbeddedResource Remove="WebJobs.Host\**" />
+    <None Remove="WebJobs.Host\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.0.2" />
@@ -32,7 +38,7 @@
     <PackageReference Include="WindowsAzure.Storage" Version="9.3.1" />
   </ItemGroup>
 
-  <ItemGroup>
+  <!--<ItemGroup>
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\AsyncConverter.cs" Link="Converters\AsyncConverter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\CompositeObjectToTypeConverter.cs" Link="Converters\CompositeObjectToTypeConverter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\ConversionResult.cs" Link="Converters\ConversionResult.cs" />
@@ -41,7 +47,7 @@
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Converters\IObjectToTypeConverter.cs" Link="Converters\IObjectToTypeConverter.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\Triggers\ITriggerDataArgumentBinding.cs" Link="Triggers\ITriggerDataArgumentBinding.cs" />
     <Compile Include="..\Microsoft.Azure.WebJobs.Host\TypeUtility.cs" Link="TypeUtility.cs" />
-  </ItemGroup>
+  </ItemGroup>-->
 
   <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
