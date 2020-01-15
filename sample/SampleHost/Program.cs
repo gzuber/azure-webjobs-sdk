@@ -46,7 +46,7 @@ namespace SampleHost
                 filter.CategoryLevels[LogCategories.Aggregator] = LogLevel.Debug;
 
                 config.LoggerFactory = new LoggerFactory()
-                    .AddApplicationInsights(instrumentationKey, filter.Filter)
+                    .AddApplicationInsights(instrumentationKey, null, filter.Filter)
                     .AddConsole(filter.Filter);
             }
         }

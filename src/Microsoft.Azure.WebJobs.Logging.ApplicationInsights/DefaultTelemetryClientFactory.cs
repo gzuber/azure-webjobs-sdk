@@ -21,6 +21,7 @@ namespace Microsoft.Azure.WebJobs.Logging.ApplicationInsights
     public class DefaultTelemetryClientFactory : ITelemetryClientFactory
     {
         private readonly string _instrumentationKey;
+        private readonly string _connectionString;
         private readonly SamplingPercentageEstimatorSettings _samplingSettings;
 
         private QuickPulseTelemetryModule _quickPulseModule;
@@ -33,11 +34,13 @@ namespace Microsoft.Azure.WebJobs.Logging.ApplicationInsights
         /// Instantiates an instance.
         /// </summary>
         /// <param name="instrumentationKey">The Application Insights instrumentation key.</param>
+        /// <param name="connectionString">The Application Insights connection string.</param>
         /// <param name="samplingSettings">The <see cref="SamplingPercentageEstimatorSettings"/> to use for configuring adaptive sampling. If null, sampling is disabled.</param>
         /// <param name="filter"></param>
-        public DefaultTelemetryClientFactory(string instrumentationKey, SamplingPercentageEstimatorSettings samplingSettings, Func<string, LogLevel, bool> filter)
+        public DefaultTelemetryClientFactory(string instrumentationKey, string connectionString, SamplingPercentageEstimatorSettings samplingSettings, Func<string, LogLevel, bool> filter)
         {
             _instrumentationKey = instrumentationKey;
+            _connectionString = connectionString;
             _samplingSettings = samplingSettings;
             _filter = filter;
         }
@@ -66,10 +69,15 @@ namespace Microsoft.Azure.WebJobs.Logging.ApplicationInsights
 
         internal TelemetryConfiguration InitializeConfiguration()
         {
-            TelemetryConfiguration config = new TelemetryConfiguration()
+            TelemetryConfiguration config = new TelemetryConfiguration();
+            if (!string.IsNullOrEmpty(_connectionString))
             {
-                InstrumentationKey = _instrumentationKey
-            };
+                config.ConnectionString = _connectionString;
+            }
+            else
+            {
+                config.InstrumentationKey = _instrumentationKey;
+            }
 
             AddInitializers(config);
 

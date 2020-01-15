@@ -19,6 +19,7 @@ namespace Microsoft.Extensions.Logging
         /// </summary>
         /// <param name="loggerFactory">The factory.</param>
         /// <param name="instrumentationKey">The Application Insights instrumentation key.</param>
+        /// <param name="connectionString">The Application Insights connection string.</param>
         /// <param name="filter">A filter that returns true if a message with the specified <see cref="LogLevel"/>
         /// and category should be logged. You can use <see cref="LogCategoryFilter.Filter(string, LogLevel)"/>
         /// or write a custom filter.</param>
@@ -26,10 +27,14 @@ namespace Microsoft.Extensions.Logging
         public static ILoggerFactory AddApplicationInsights(
             this ILoggerFactory loggerFactory,
             string instrumentationKey,
+            string connectionString,
             Func<string, LogLevel, bool> filter)
         {
-            ITelemetryClientFactory defaultFactory = new DefaultTelemetryClientFactory(instrumentationKey,
-                new SamplingPercentageEstimatorSettings(), filter);
+            ITelemetryClientFactory defaultFactory = new DefaultTelemetryClientFactory(
+                                                                instrumentationKey,
+                                                                connectionString,
+                                                                new SamplingPercentageEstimatorSettings(),
+                                                                filter);
 
             return AddApplicationInsights(loggerFactory, defaultFactory);
         }

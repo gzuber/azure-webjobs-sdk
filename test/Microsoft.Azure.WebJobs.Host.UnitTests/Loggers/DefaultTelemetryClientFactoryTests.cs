@@ -10,10 +10,13 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Loggers
 {
     public class DefaultTelemetryClientFactoryTests
     {
+        private readonly string _mockInstrumentationKey = "some_key";
+        private readonly string _mockConnectionString = "InstrumentationKey=some_other_key";
+
         [Fact]
         public void InitializeConfiguguration_Configures()
         {
-            var factory = new DefaultTelemetryClientFactory(string.Empty, null, null);
+            var factory = new DefaultTelemetryClientFactory(string.Empty, string.Empty, null, null);
             var config = factory.InitializeConfiguration();
 
             // Verify Initializers
@@ -25,6 +28,17 @@ namespace Microsoft.Azure.WebJobs.Host.UnitTests.Loggers
 
             // Verify Channel
             Assert.IsType<ServerTelemetryChannel>(config.TelemetryChannel);
+        }
+
+        [Fact]
+        public void InitializeConfiguration_Configures_WithConnectionString()
+        {
+            var factory = new DefaultTelemetryClientFactory(_mockInstrumentationKey, _mockConnectionString, null, null);
+            var config = factory.InitializeConfiguration();
+
+            // Verify Key/ConnectionString
+            Assert.Equal(_mockConnectionString, config.ConnectionString);
+            Assert.Equal("some_other_key", config.InstrumentationKey);
         }
     }
 }

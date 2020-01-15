@@ -586,7 +586,7 @@ namespace Microsoft.Azure.WebJobs.Host.EndToEndTests
             private TestTelemetryChannel _channel;
 
             public TestTelemetryClientFactory(Func<string, LogLevel, bool> filter, TestTelemetryChannel channel)
-                : base(_mockApplicationInsightsKey, new SamplingPercentageEstimatorSettings(), filter)
+                : base(_mockApplicationInsightsKey, null, new SamplingPercentageEstimatorSettings(), filter)
             {
                 _channel = channel;
             }
